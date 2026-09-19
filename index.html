@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Antigravity on WebAssembly</title>
+
+  <!-- PyScript CSS & JS from official CDN -->
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+  <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+    .card {
+      background-color: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 640px;
+      width: 100%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: #38bdf8;
+      margin-top: 0;
+    }
+    pre {
+      background: #090d16;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      color: #a5f3fc;
+      overflow-x: auto;
+    }
+    button {
+      background-color: #22c55e;
+      color: #022c22;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #4ade80;
+    }
+    #output {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      background-color: #0b1120;
+      border: 1px dashed #475569;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      min-height: 48px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🚀 PyScript: <code>import antigravity</code></h1>
+    <p>Run real CPython code inside your browser via WebAssembly.</p>
+
+    <pre><code>import antigravity
+import js
+
+# Defy gravity via WebAssembly
+js.window.open("https://xkcd.com/353/", "_blank")</code></pre>
+
+    <button id="fly-btn">
+      <span>Execute Flight</span>
+    </button>
+
+    <div id="output">Status: Ready. Click button to launch Python code...</div>
+  </div>
+
+  <!-- PyScript WebAssembly Engine -->
+  <script type="py">
+    import js
+    from pyodide.ffi import create_proxy
+
+    def fly(event):
+        output_div = js.document.getElementById("output")
+        output_div.innerHTML = "✨ Python: Defying gravity... opening xkcd #353 in a new tab!"
+        js.window.open("https://xkcd.com/353/", "_blank")
+
+    fly_proxy = create_proxy(fly)
+    js.document.getElementById("fly-btn").addEventListener("click", fly_proxy)
+  </script>
+
+</body>
+</html>
