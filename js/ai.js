@@ -32,17 +32,21 @@ export const AI = {
 
         if (res.ok) {
           return await res.json();
+        } else if (res.status === 404) {
+          console.info('[AI Client] Static host detected (/api/analyze-document returned 404). Falling back to client simulation engine.');
         } else {
           const errData = await res.json().catch(() => ({}));
           throw new Error(errData.error || `Analysis request failed with status ${res.status}`);
         }
       } catch (err) {
-        console.warn('[AI Client] API call failed:', err.message);
-        throw err;
+        if (err.message && !err.message.includes('404')) {
+          console.warn('[AI Client] API call failed:', err.message);
+          throw err;
+        }
       }
     }
 
-    // Direct local fallback if running directly via file:// protocol or Node.js test environment
+    // Direct local fallback if running directly via GitHub Pages, file:// protocol or Node.js test environment
     return this.offlineFallbackAnalysis(textInput);
   },
 
