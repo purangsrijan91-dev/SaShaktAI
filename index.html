@@ -3,108 +3,269 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Antigravity on WebAssembly</title>
-
-  <!-- PyScript CSS & JS from official CDN -->
-  <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
-  <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+  <title>SaShaktAI - Proactive Companion for Seniors</title>
+  
+  <!-- Tailwind CSS via CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#0B1120',
+            cardDark: '#1E293B',
+            accentYellow: '#FACC15',
+            accessibleGreen: '#22C55E',
+            accessibleAlert: '#EF4444'
+          },
+          fontSize: {
+            'senior-body': ['1.375rem', { lineHeight: '2rem' }],      // 22px
+            'senior-title': ['2rem', { lineHeight: '2.5rem' }],        // 32px
+            'senior-display': ['2.5rem', { lineHeight: '3rem' }]       // 40px
+          },
+          minHeight: {
+            'touch': '64px'
+          },
+          minWidth: {
+            'touch': '64px'
+          }
+        }
+      }
+    }
+  </script>
 
   <style>
-    body {
-      background-color: #0f172a;
-      color: #f8fafc;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 1.5rem;
-      box-sizing: border-box;
+    /* Prevent accidental text selections during unsteady touch interaction */
+    * {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .card {
-      background-color: #1e293b;
-      border: 2px solid #334155;
-      border-radius: 1rem;
-      padding: 2rem;
-      max-width: 640px;
-      width: 100%;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-    }
-    h1 {
-      font-size: 1.5rem;
-      color: #38bdf8;
-      margin-top: 0;
-    }
-    pre {
-      background: #090d16;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      color: #a5f3fc;
-      overflow-x: auto;
-    }
-    button {
-      background-color: #22c55e;
-      color: #022c22;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: background-color 0.2s;
-    }
-    button:hover {
-      background-color: #4ade80;
-    }
-    #output {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      background-color: #0b1120;
-      border: 1px dashed #475569;
-      color: #cbd5e1;
-      font-size: 0.95rem;
-      min-height: 48px;
+    :focus-visible {
+      outline: 4px solid #FACC15 !important;
+      outline-offset: 4px !important;
     }
   </style>
 </head>
-<body>
+<body class="bg-brandDark text-slate-100 min-h-screen flex flex-col justify-between p-4 md:p-8 font-sans antialiased">
 
-  <div class="card">
-    <h1>🚀 PyScript: <code>import antigravity</code></h1>
-    <p>Run real CPython code inside your browser via WebAssembly.</p>
+  <!-- TOP BAR: TRUST & STATUS -->
+  <header class="flex justify-between items-center bg-cardDark/80 border-2 border-slate-700 rounded-2xl px-6 py-4 mb-6 shadow-md">
+    <div class="flex items-center gap-3">
+      <div class="w-4 h-4 rounded-full bg-accessibleGreen animate-pulse"></div>
+      <span class="text-xl md:text-2xl font-black tracking-wide text-white">SaShaktAI</span>
+      <span class="hidden sm:inline-block text-xs bg-slate-800 text-accentYellow border border-accentYellow/30 px-3 py-1 rounded-full font-mono uppercase tracking-wider">
+        Safe & Verified
+      </span>
+    </div>
+    <div class="text-right">
+      <div id="clockDisplay" class="text-xl md:text-2xl font-bold text-accentYellow">--:--</div>
+      <div id="dateDisplay" class="text-sm text-slate-400 font-medium">Today</div>
+    </div>
+  </header>
 
-    <pre><code>import antigravity
-import js
+  <!-- MAIN VIEWPORT: 4 ZERO-DEPTH CARDS -->
+  <main class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow">
+    
+    <!-- CARD 1: TODAY'S FOCUS & APPOINTMENT -->
+    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Today's Schedule</span>
+          <span class="text-slate-400 text-sm">Priority Notice</span>
+        </div>
+        <h2 class="text-senior-title md:text-senior-display font-black text-white mb-2">
+          Dr. Robert Wilson
+        </h2>
+        <p class="text-senior-body text-slate-300 font-semibold mb-4">
+          Cardiology Visit at 2:00 PM (St. Jude Center)
+        </p>
+        <div class="bg-amber-950/60 border-2 border-amber-500/60 p-4 rounded-2xl mb-4 text-amber-200 text-lg font-medium">
+          ⚠️ <strong>Doctor's Rule:</strong> No solid food after 10:00 AM today. Water is fine.
+        </div>
+      </div>
+      <div class="pt-4 border-t border-slate-700">
+        <button id="bookRideBtn" onclick="triggerRideBooking()" class="w-full min-h-touch bg-accessibleGreen hover:bg-emerald-400 active:scale-95 text-slate-950 text-xl md:text-2xl font-black rounded-2xl flex items-center justify-center gap-3 transition-transform shadow-lg">
+          <span>🚗 Yes, Reserve My Ride</span>
+        </button>
+      </div>
+    </section>
 
-# Defy gravity via WebAssembly
-js.window.open("https://xkcd.com/353/", "_blank")</code></pre>
+    <!-- CARD 2: DOCUMENT & MEDICINE VISION SCANNER -->
+    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Vision Assistant</span>
+          <span class="text-slate-400 text-sm">Anti-Fraud Shield</span>
+        </div>
+        <h2 class="text-senior-title md:text-senior-display font-black text-white mb-2">
+          Help Me Read This
+        </h2>
+        <p class="text-senior-body text-slate-300 mb-4">
+          Hold up any letter, hospital bill, or pill bottle to your camera.
+        </p>
+        <div id="scanPreviewBox" class="relative bg-slate-950 rounded-2xl border-2 border-dashed border-slate-600 h-44 flex flex-col items-center justify-center overflow-hidden">
+          <video id="webcamFeed" class="absolute inset-0 w-full h-full object-cover hidden" autoplay playsinline muted></video>
+          <div id="scannerInstructions" class="text-center p-4">
+            <span class="text-4xl block mb-2">📄</span>
+            <span class="text-slate-300 font-bold text-lg">Camera Ready to Inspect</span>
+          </div>
+          <div id="scanOverlay" class="absolute inset-0 border-4 border-accentYellow animate-pulse hidden"></div>
+        </div>
+      </div>
+      <div class="pt-4 border-t border-slate-700">
+        <button id="scanDocBtn" onclick="toggleDocumentScan()" class="w-full min-h-touch bg-accentYellow hover:bg-yellow-300 active:scale-95 text-slate-950 text-xl md:text-2xl font-black rounded-2xl flex items-center justify-center gap-3 transition-transform shadow-lg">
+          <span>📷 Scan My Paper Now</span>
+        </button>
+      </div>
+    </section>
 
-    <button id="fly-btn">
-      <span>Execute Flight</span>
+    <!-- CARD 3: FAMILY & CAREGIVER BRIDGE -->
+    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Family Connection</span>
+          <span class="text-slate-400 text-sm">Synchronized</span>
+        </div>
+        <h2 class="text-senior-title md:text-senior-display font-black text-white mb-2">
+          Call Sarah (Daughter)
+        </h2>
+        <p class="text-senior-body text-slate-300 mb-4">
+          Sarah is updated on your schedule and received your morning confirmation.
+        </p>
+        <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-2xl text-slate-300 text-base">
+          💬 <em>"Have a good appointment mom, love you!"</em> — Sarah at 9:15 AM
+        </div>
+      </div>
+      <div class="pt-4 border-t border-slate-700">
+        <button onclick="speakPresbycusisAudio('Connecting you with Sarah now. Please hold on.')" class="w-full min-h-touch bg-blue-500 hover:bg-blue-400 active:scale-95 text-slate-950 text-xl md:text-2xl font-black rounded-2xl flex items-center justify-center gap-3 transition-transform shadow-lg">
+          <span>📞 Call Sarah</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- CARD 4: VERIFIED 24/7 ASSISTANCE -->
+    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Support</span>
+          <span class="text-slate-400 text-sm">Toll-Free</span>
+        </div>
+        <h2 class="text-senior-title md:text-senior-display font-black text-white mb-2">
+          Speak with a Helper
+        </h2>
+        <p class="text-senior-body text-slate-300 mb-4">
+          Connect immediately to a verified community human concierge for questions or company.
+        </p>
+        <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-2xl text-slate-300 text-base flex items-center gap-3">
+          <span class="text-2xl">🛡️</span>
+          <span>Verified Government & Senior Living Network Operator</span>
+        </div>
+      </div>
+      <div class="pt-4 border-t border-slate-700">
+        <button onclick="speakPresbycusisAudio('Connecting you directly with your verified community operator.')" class="w-full min-h-touch bg-slate-700 hover:bg-slate-600 active:scale-95 text-white text-xl md:text-2xl font-black rounded-2xl flex items-center justify-center gap-3 transition-transform shadow-lg">
+          <span>🤝 Call Concierge</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PERSISTENT VOICE ASSISTANCE LOWER BAR -->
+  <footer class="mt-6">
+    <button onclick="handleVoiceTrigger()" class="w-full min-h-[76px] bg-accentYellow hover:bg-yellow-300 active:scale-[0.98] text-slate-950 rounded-2xl flex items-center justify-center gap-4 px-6 py-4 shadow-2xl transition-all border-2 border-yellow-400">
+      <span class="text-3xl">🎤</span>
+      <span id="voiceBarText" class="text-2xl md:text-3xl font-black tracking-tight">
+        Press to Speak with SaShaktAI
+      </span>
     </button>
+  </footer>
 
-    <div id="output">Status: Ready. Click button to launch Python code...</div>
-  </div>
+  <!-- SCRIPT LOGIC: ACOUSTICS, SCANNING & TIME -->
+  <script>
+    // 1. Clock and Date Engine
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clockDisplay').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('dateDisplay').textContent = now.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-  <!-- PyScript WebAssembly Engine -->
-  <script type="py">
-    import js
-    from pyodide.ffi import create_proxy
+    // 2. Presbycusis-Tuned Audio Synthesizer (Slower speed, lower pitch)
+    function speakPresbycusisAudio(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.85;  // Slower pacing prevents cognitive fatigue
+        utterance.pitch = 0.95; // Slightly lower pitch for optimal high-frequency hearing loss clarity
+        window.speechSynthesis.speak(utterance);
+      }
+    }
 
-    def fly(event):
-        output_div = js.document.getElementById("output")
-        output_div.innerHTML = "✨ Python: Defying gravity... opening xkcd #353 in a new tab!"
-        js.window.open("https://xkcd.com/353/", "_blank")
+    // 3. Autonomous Task Execution: Ride Booking
+    function triggerRideBooking() {
+      const btn = document.getElementById('bookRideBtn');
+      btn.innerHTML = '<span>⏳ Reserving Your Car...</span>';
+      speakPresbycusisAudio("Reserving your ride for one fifteen PM to St. Jude Health Center now.");
 
-    fly_proxy = create_proxy(fly)
-    js.document.getElementById("fly-btn").addEventListener("click", fly_proxy)
+      setTimeout(() => {
+        btn.innerHTML = '<span>✅ Car Confirmed for 1:15 PM</span>';
+        btn.classList.remove('bg-accessibleGreen', 'hover:bg-emerald-400');
+        btn.classList.add('bg-slate-700', 'text-white');
+        speakPresbycusisAudio("All set, Eleanor. A car will arrive at your front door at one fifteen PM. Your daughter Sarah has been sent the trip confirmation.");
+      }, 2000);
+    }
+
+    // 4. Live Webcam Document Scanner
+    let streamInstance = null;
+    async function toggleDocumentScan() {
+      const video = document.getElementById('webcamFeed');
+      const instructions = document.getElementById('scannerInstructions');
+      const overlay = document.getElementById('scanOverlay');
+      const btn = document.getElementById('scanDocBtn');
+
+      if (!streamInstance) {
+        try {
+          streamInstance = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+          video.srcObject = streamInstance;
+          video.classList.remove('hidden');
+          instructions.classList.add('hidden');
+          overlay.classList.remove('hidden');
+          btn.innerHTML = '<span>✨ Processing Document...</span>';
+          speakPresbycusisAudio("I see your paper. Please hold still while I check it for you.");
+
+          // Simulate computer vision processing and scam verification
+          setTimeout(() => {
+            overlay.classList.add('hidden');
+            speakPresbycusisAudio("This is your monthly electric bill from City Power for forty-two dollars. It is due September 29th. It is safe and verified.");
+            alert("✅ SCATTER & SCAM CHECK: Verified Official Utility Document.\n\nSummary:\n- Provider: City Power & Light\n- Amount Due: $42.50\n- Due Date: Sep 29\n- Fraud Risk: 0% Safe");
+            
+            // Stop camera and reset
+            streamInstance.getTracks().forEach(track => track.stop());
+            streamInstance = null;
+            video.classList.add('hidden');
+            instructions.classList.remove('hidden');
+            btn.innerHTML = '<span>📷 Scan My Paper Now</span>';
+          }, 3500);
+
+        } catch (err) {
+          speakPresbycusisAudio("Could not access the camera. Simulating your document check now.");
+          alert("Demo Mode: Scanned Electric Bill from City Power ($42.50). Valid and safe to pay.");
+        }
+      }
+    }
+
+    // 5. Voice Interaction Bar
+    function handleVoiceTrigger() {
+      const voiceBarText = document.getElementById('voiceBarText');
+      voiceBarText.textContent = "Listening to you...";
+      speakPresbycusisAudio("Hello Eleanor, I am listening. How can I help you today?");
+      setTimeout(() => {
+        voiceBarText.textContent = "Press to Speak with SaShaktAI";
+      }, 4000);
+    }
   </script>
-
 </body>
 </html>
