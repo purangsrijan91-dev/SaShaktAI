@@ -1,600 +1,592 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta name="description" content="SaShaktAI: Accessible, zero-depth ambient companion for senior citizens powered by generative intelligence." />
-  <title>SaShaktAI - Senior Daily Companion</title>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              base: '#0B132B',       // Deep Anti-Glare Navy
-              surface: '#1C2541',    // High-Contrast Dark Slate
-              surfaceElevated: '#283655',
-              border: '#475569',
-              accent: '#FDE047',     // WCAG AAA Vibrant Yellow (Contrast > 10:1 vs dark)
-              accentHover: '#FEF08A',
-              success: '#4ADE80',    // Accessible Green
-              danger: '#F87171',     // Accessible Red
-              textLight: '#FFFFFF',
-              textSubtle: '#CBD5E1'
-            }
-          },
-          fontSize: {
-            'senior-xs': ['1.125rem', { lineHeight: '1.75rem' }], // 18px
-            'senior-sm': ['1.25rem', { lineHeight: '1.875rem' }],  // 20px
-            'senior-base': ['1.5rem', { lineHeight: '2.25rem' }],  // 24px
-            'senior-lg': ['1.875rem', { lineHeight: '2.5rem' }],   // 30px
-            'senior-xl': ['2.25rem', { lineHeight: '2.875rem' }],  // 36px
-            'senior-display': ['2.75rem', { lineHeight: '3.25rem' }] // 44px
-          },
-          minHeight: {
-            'target': '64px'
-          },
-          minWidth: {
-            'target': '64px'
-          }
-        }
-      }
-    };
-  </script>
-
-  <style>
-    /* Prevent accidental gesture zoom and double-tap zoom delay */
-    html, body {
-      touch-action: manipulation;
-    }
-    /* Accessible Focus Ring: Visible 4px bright yellow outline */
-    :focus-visible {
-      outline: 4px solid #FDE047 !important;
-      outline-offset: 4px !important;
-    }
-    /* Prevent text selection to help users with physical tremors */
-    .no-select {
-      -webkit-user-select: none;
-      user-select: none;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaShaktAI — Senior Companion & Caregiver Safety Circle</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="h-full bg-brand-base text-brand-textLight flex flex-col font-sans no-select antialiased p-3 sm:p-6 lg:p-8">
+<body>
 
-  <!-- ACCESSIBILITY SKIP LINK -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-brand-accent text-slate-950 font-bold p-4 rounded-xl text-senior-base">
-    Skip to Main Content
-  </a>
-
-  <!-- ARIA LIVE ANNOUNCER REGION (Invisible to eyes, read by Screen Readers) -->
-  <div id="sr-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- TOP BAR: TRUST BADGE, SYSTEM HEALTH & TELEMETRY -->
-  <header class="w-full bg-brand-surface border-2 border-brand-border rounded-3xl px-6 py-4 mb-6 shadow-2xl flex flex-wrap justify-between items-center gap-4">
-    <div class="flex items-center gap-4">
-      <div class="w-5 h-5 rounded-full bg-brand-success shadow-lg shadow-emerald-500/50 animate-pulse" aria-hidden="true"></div>
-      <div>
-        <h1 class="text-senior-lg font-black tracking-tight text-white m-0">SaShaktAI</h1>
-        <p class="text-senior-xs text-brand-accent font-semibold tracking-wide uppercase">
-          Zero-Trust Protected • WCAG 2.2 AAA Verified
-        </p>
+  <!-- Top Web Application Bar with System Health, Accessibility & Live Mode -->
+  <header class="app-header">
+    <div class="header-content">
+      <div class="brand-badge">
+        <span class="pulse-dot"></span>
+        <div class="brand-identity">
+          <span class="brand-text">SaShaktAI</span>
+          <span class="brand-tagline">AI Companion for Senior Independence &amp; Caregiver Safety</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Live Ambient Telemetry -->
-    <div class="flex items-center gap-6">
-      <div class="text-right">
-        <time id="live-clock" class="text-senior-lg font-black text-brand-accent tabular-nums">--:--</time>
-        <div id="live-date" class="text-senior-xs text-brand-textSubtle font-medium">---</div>
+      <!-- Senior Accessibility Controls Toolbar -->
+      <div class="accessibility-toolbar" aria-label="Accessibility controls">
+        <span class="toolbar-label">Text Size:</span>
+        <button class="btn-access-chip" id="btnFontDecrease" aria-label="Decrease text size" title="Smaller text">A−</button>
+        <button class="btn-access-chip" id="btnFontReset" aria-label="Reset text size" title="Default text size">A</button>
+        <button class="btn-access-chip" id="btnFontIncrease" aria-label="Increase text size" title="Larger text">A+</button>
+        <button class="btn-access-chip contrast-btn" id="btnHighContrast" aria-label="Toggle high contrast mode" title="High contrast display">🌓 Contrast</button>
       </div>
-      <!-- Test Diagnostics Trigger -->
-      <button onclick="SaShaktEngine.runSelfTestDiagnostics()" class="min-h-target px-4 py-2 bg-brand-surfaceElevated hover:bg-slate-700 border-2 border-brand-border rounded-2xl text-brand-textSubtle text-senior-xs font-bold transition-colors" aria-label="Run System Diagnostics">
-        Run Self-Test
-      </button>
+
+      <div class="header-actions">
+        <span id="serverStatusBadge" class="status-pill simulated">⚠️ Demo Mock Mode</span>
+        <span class="time-display" id="globalClock">10:32 AM</span>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN OPERATIONAL WORKSPACE (4 ZERO-DEPTH TILES) -->
-  <main id="main-content" class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+  <!-- Dual-Workspace Web Portal (Senior Workspace + Caregiver Intelligence Center) -->
+  <main class="web-app-container">
 
-    <!-- ==================== TILE 1: TODAY'S MEDICAL AGENDA ==================== -->
-    <section class="bg-brand-surface border-2 border-brand-border rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl" aria-labelledby="heading-agenda">
-      <div>
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-brand-accent text-senior-xs font-black uppercase tracking-wider">Priority Routine</span>
-          <span class="bg-slate-800 text-brand-textLight border border-slate-600 px-3 py-1 rounded-full text-senior-xs font-bold">1 of 1 Today</span>
-        </div>
+    <!-- PRIMARY WEB WORKSPACE: Eleanor's Senior Companion Portal -->
+    <section class="portal-column senior-portal-column" aria-label="Senior Companion Portal">
+      <div class="web-portal-card senior-portal-card">
         
-        <h2 id="heading-agenda" class="text-senior-xl font-black text-white mb-2">
-          Dr. Robert Wilson
-        </h2>
-        <p class="text-senior-base text-brand-textSubtle font-medium mb-4">
-          Cardiology Check-up • 2:00 PM at St. Jude Clinic
-        </p>
-
-        <!-- Doctor's Preparation Callout Box -->
-        <div class="p-5 rounded-2xl bg-amber-950/70 border-2 border-amber-400 text-amber-100 text-senior-sm font-semibold mb-4 leading-relaxed" role="note">
-          <span class="text-brand-accent font-black text-senior-base block mb-1">⚠️ Preparation Instructions:</span>
-          No solid food after 10:00 AM. Regular water and morning medications are approved.
-        </div>
-      </div>
-
-      <!-- Action Area -->
-      <div class="pt-4 border-t-2 border-slate-700/80">
-        <button id="btn-book-transit" onclick="SaShaktEngine.executeTransitWorkflow()" class="w-full min-h-target bg-brand-success hover:bg-emerald-400 active:scale-[0.98] text-slate-950 text-senior-base font-black rounded-2xl p-4 flex items-center justify-center gap-3 transition-all shadow-xl">
-          <span class="text-3xl" aria-hidden="true">🚗</span>
-          <span id="transit-btn-label">Book My Ride for 1:15 PM</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ==================== TILE 2: MULTIMODAL VISION DECODER ==================== -->
-    <section class="bg-brand-surface border-2 border-brand-border rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl" aria-labelledby="heading-vision">
-      <div>
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-brand-accent text-senior-xs font-black uppercase tracking-wider">Multimodal OCR & Anti-Scam</span>
-          <span id="scanner-badge" class="bg-emerald-950 text-brand-success border border-brand-success/40 px-3 py-1 rounded-full text-senior-xs font-bold">Scanner Ready</span>
-        </div>
-
-        <h2 id="heading-vision" class="text-senior-xl font-black text-white mb-2">
-          Help Me Read This
-        </h2>
-        <p class="text-senior-base text-brand-textSubtle font-medium mb-4">
-          Hold any letter, medical bill, or pill bottle in front of your camera.
-        </p>
-
-        <!-- Dynamic Scanner Viewport -->
-        <div id="camera-frame-container" class="relative w-full h-48 bg-slate-950 rounded-2xl border-3 border-dashed border-slate-600 flex flex-col items-center justify-center overflow-hidden">
-          <video id="webcam-stream" class="absolute inset-0 w-full h-full object-cover hidden" playsinline muted autoplay></video>
-          <div id="scanner-idle-content" class="text-center p-4">
-            <span class="text-4xl block mb-2" aria-hidden="true">📄</span>
-            <p class="text-senior-sm text-slate-300 font-bold m-0">Camera Viewfinder Idle</p>
+        <!-- Senior Portal Web Header -->
+        <div class="portal-card-header senior-header-bar">
+          <div class="user-profile-badge">
+            <div class="profile-avatar">👵</div>
+            <div class="profile-meta">
+              <h2 class="profile-name">Eleanor Vance</h2>
+              <span class="profile-status">Independent Living • Monitored by Sarah</span>
+            </div>
           </div>
-          <!-- Animated HUD Overlay during OCR -->
-          <div id="scanner-hud-overlay" class="absolute inset-0 border-4 border-brand-accent bg-yellow-400/10 hidden animate-pulse pointer-events-none" aria-hidden="true"></div>
+          <div class="portal-header-actions">
+            <span class="senior-time-badge" id="seniorClock">10:32 AM</span>
+          </div>
         </div>
-      </div>
 
-      <!-- Action Area -->
-      <div class="pt-4 border-t-2 border-slate-700/80">
-        <button id="btn-scan-doc" onclick="SaShaktEngine.toggleDocumentInspection()" class="w-full min-h-target bg-brand-accent hover:bg-brand-accentHover active:scale-[0.98] text-slate-950 text-senior-base font-black rounded-2xl p-4 flex items-center justify-center gap-3 transition-all shadow-xl">
-          <span class="text-3xl" aria-hidden="true">📷</span>
-          <span id="scan-btn-label">Inspect Document Now</span>
-        </button>
+        <!-- Senior Main Viewport (4-Stage Progressive Flow) -->
+        <div class="senior-viewport" id="seniorViewport">
+
+          <!-- 4-Stage Workflow Progress Stepper -->
+          <nav class="senior-flow-stepper" aria-label="Senior companion flow progress">
+            <div class="flow-step active" id="stepIndicatorHome">
+              <span class="step-num">1</span>
+              <span class="step-text">Home</span>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step" id="stepIndicatorTask">
+              <span class="step-num">2</span>
+              <span class="step-text">Task</span>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step" id="stepIndicatorResult">
+              <span class="step-num">3</span>
+              <span class="step-text">Inline Result</span>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step" id="stepIndicatorAction">
+              <span class="step-num">4</span>
+              <span class="step-text">Next Action</span>
+            </div>
+          </nav>
+
+          <!-- ========================================== -->
+          <!-- STAGE 1: HOME (Eleanor's Calm Starting View) -->
+          <!-- ========================================== -->
+          <div class="stage-section" id="stageHome">
+            
+            <!-- Greeting Block -->
+            <div class="senior-greeting">
+              <h1 class="senior-title">Good morning, Eleanor</h1>
+              <p class="senior-subtitle">How can I help you today?</p>
+            </div>
+
+            <!-- Hero Action: Talk to SaShakt AI -->
+            <button class="btn-hero" id="btnHeroTalk" aria-label="Talk to SaShakt AI">
+              <span class="btn-hero-icon">🎤</span>
+              <span class="btn-hero-title">TALK TO SASHAKT AI</span>
+              <span class="btn-hero-sub">"Just tell me what you need"</span>
+            </button>
+
+            <!-- Quick Actions Grid -->
+            <div class="quick-grid">
+              <button class="btn-quick" id="btnShowSomething" aria-label="Show me something with camera">
+                <span class="quick-icon">📷</span>
+                <span class="quick-label">Show me something</span>
+                <span class="quick-sub">Scan letter, bill or notice</span>
+              </button>
+              <button class="btn-quick" id="btnMyDay" aria-label="Check my appointments and schedule">
+                <span class="quick-icon">📅</span>
+                <span class="quick-label">My day</span>
+                <span class="quick-sub">Appointments &amp; routine</span>
+              </button>
+            </div>
+
+            <!-- 1-Click Judge Scenario Launcher -->
+            <div class="judge-launcher-card">
+              <div class="launcher-header">
+                <span class="launcher-badge">⚡ JUDGE TEST BENCHMARK</span>
+                <span class="launcher-hint">1-click to test complete pipeline</span>
+              </div>
+              <div class="launcher-chips">
+                <button class="btn-launcher-chip scam" id="quickLaunchScam">
+                  <span>🚨</span>
+                  <span>1. Extortion Scam</span>
+                </button>
+                <button class="btn-launcher-chip torn" id="quickLaunchTorn">
+                  <span>❓</span>
+                  <span>2. Torn Bill (Uncertain)</span>
+                </button>
+                <button class="btn-launcher-chip safe" id="quickLaunchSafe">
+                  <span>✅</span>
+                  <span>3. Safe Electric Bill</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Family Safety Circle Card -->
+            <div class="family-card" id="cardFamilyCircle" aria-label="Family Safety Circle">
+              <span class="family-avatar">👨‍👩‍👧</span>
+              <div class="family-info">
+                <span class="family-title">Family Safety Circle</span>
+                <span class="family-status">Sarah (Daughter) is connected &amp; online</span>
+              </div>
+            </div>
+
+            <!-- Human Escalation Emergency Button -->
+            <button class="btn-emergency" id="btnEmergencyHelp" aria-label="Get human help immediately">
+              <span>🆘</span>
+              <span>Get human help</span>
+            </button>
+
+          </div>
+
+          <!-- ========================================== -->
+          <!-- STAGE 2: TASK (Active Ingest / Listening)   -->
+          <!-- ========================================== -->
+          <div class="stage-section" id="stageTask" style="display: none;">
+            
+            <div class="stage-nav-bar">
+              <button class="btn-flow-back" id="btnBackFromTask" aria-label="Return to Home Screen">
+                <span>←</span>
+                <span>Return to Home</span>
+              </button>
+              <span class="task-active-badge" id="taskActiveBadge">Task in Progress</span>
+            </div>
+
+            <!-- Hidden File Input for Real Camera / Image Upload -->
+            <input type="file" id="realImageInput" accept="image/*" capture="environment" style="display: none;">
+
+            <!-- SUB-PANEL 2A: Voice Task (Microphone + Inline Input, No Popups!) -->
+            <div class="task-subpanel" id="panelVoiceTask" style="display: none;">
+              <div class="voice-hero-card">
+                <div class="voice-hero-top">
+                  <div class="voice-wave-container" id="voiceWave">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                  </div>
+                  <button class="btn-retry-mic" id="btnRetryMic" aria-label="Start Voice Listening">
+                    <span class="mic-icon">🎙️</span>
+                    <span id="btnRetryMicText">Tap to Speak</span>
+                  </button>
+                </div>
+                <div class="voice-prompt-text" id="voicePromptText">
+                  "Listening... Speak clearly into your microphone."
+                </div>
+              </div>
+
+              <!-- Inline Text Fallback (Zero Browser Modal / Prompt) -->
+              <div class="inline-voice-input-row">
+                <input type="text" id="txtInlineVoice" class="senior-text-input" placeholder="Or type what you want to ask SaShaktAI...">
+                <button class="btn-senior-send" id="btnSendInlineVoice">Ask</button>
+              </div>
+
+              <!-- Quick Senior Question Chips -->
+              <div class="voice-suggestions">
+                <span class="suggestion-label">Suggested questions:</span>
+                <div class="suggestion-chips">
+                  <button class="suggestion-chip" data-query="What time is my cardiology appointment tomorrow?">
+                    📅 Cardiology appointment tomorrow?
+                  </button>
+                  <button class="suggestion-chip" data-query="Is my electric bill already paid this month?">
+                    💡 Is my electric bill already paid?
+                  </button>
+                  <button class="suggestion-chip" data-query="I received a letter threatening to cut off my power unless I buy gift cards">
+                    ⚠️ Letter says power cut off with gift cards
+                  </button>
+                  <button class="suggestion-chip" data-query="Hello SaShaktAI, how are you today?">
+                    💬 Hello SaShaktAI, how are you?
+                  </button>
+                  <button class="suggestion-chip" data-query="Can you call my daughter Sarah?">
+                    📞 Can you call my daughter Sarah?
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-PANEL 2B: Vision / Document Task (Phase 1 Real Multimodal Pipeline) -->
+            <div class="task-subpanel" id="panelVisionTask" style="display: none;">
+              <!-- 1. Select & 2. Preview Image -->
+              <div class="image-dropzone" id="imageDropzone">
+                <div class="dropzone-header">
+                  <span class="dropzone-title">📷 Document Image Preview</span>
+                  <button class="btn-text-action" id="btnUploadNew">📁 Choose File / Photo</button>
+                </div>
+                
+                <div class="preview-stage" id="previewStage">
+                  <img id="activeDocumentImg" src="assets/sample_scam_notice.svg" alt="Active Document Preview">
+                </div>
+                <div class="preview-caption" id="previewCaption">sample_scam_notice.svg (3.2 KB)</div>
+
+                <!-- Test Sample Documents for Rapid Verification -->
+                <div class="sample-chips">
+                  <span class="chip-label">Select Test Document:</span>
+                  <button class="sample-chip active" id="chipScam">1. Scam Notice</button>
+                  <button class="sample-chip" id="chipTorn">2. Torn Slip (Uncertain)</button>
+                  <button class="sample-chip" id="chipSafe">3. Safe Statement</button>
+                  <button class="sample-chip" id="chipIrrelevant">4. Non-Document (Pet)</button>
+                </div>
+
+                <!-- 3. Submit Document for Analysis -->
+                <button class="btn-submit-analysis" id="btnSubmitAnalysis" aria-label="Analyze Document with Gemini AI">
+                  <span>🔍</span>
+                  <span>Analyze Document with Gemini AI</span>
+                </button>
+              </div>
+
+              <!-- 4. Analysis / Loading State -->
+              <div class="analysis-loading-box" id="analysisLoadingBox" style="display: none;" role="status" aria-live="polite">
+                <div class="spinner-ring"></div>
+                <div class="loading-content">
+                  <strong class="loading-title" id="loadingTitle">Analyzing Document with Gemini Multimodal AI...</strong>
+                  <p class="loading-sub" id="loadingSub">Transmitting image, extracting entities, and evaluating security signals...</p>
+                </div>
+              </div>
+
+              <!-- 10. Graceful Error Recovery Banner -->
+              <div class="error-recovery-box" id="errorRecoveryBox" style="display: none;" role="alert">
+                <span class="error-icon">⚠️</span>
+                <div class="error-content">
+                  <strong class="error-title">Unable to Analyze Document</strong>
+                  <p class="error-desc" id="errorRecoveryMsg">An error occurred while communicating with the analysis server.</p>
+                  <button class="btn-retry" id="btnRetryDoc">🔄 Try Another Image</button>
+                </div>
+              </div>
+
+              <!-- Multimodal 7-Step Reasoning Pipeline Stepper -->
+              <div class="pipeline-card" id="pipelineCard">
+                <div class="pipeline-card-header">
+                  <span class="pipeline-card-title">⚡ Gemini Multimodal Reasoning Pipeline</span>
+                  <span class="pipeline-status" id="pipelineStatus">Ready</span>
+                </div>
+                <div class="pipeline-steps">
+                  <span class="p-step done" id="p1">📷 Image Ingest</span>
+                  <span class="p-arr">→</span>
+                  <span class="p-step done" id="p2">🚀 Sent to Gemini</span>
+                  <span class="p-arr">→</span>
+                  <span class="p-step done" id="p3">👁️ Multimodal</span>
+                  <span class="p-arr">→</span>
+                  <span class="p-step done" id="p4">📋 Extraction</span>
+                  <span class="p-arr">→</span>
+                  <span class="p-step done" id="p5">🔍 Risk Assessment</span>
+                  <span class="p-arr">→</span>
+                  <span class="p-step done" id="p6">🗣️ Explanation</span>
+                  <span class="p-arr">→</span>
+                  <span class="p-step done" id="p7">✅ Action</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-PANEL 2C: Day / Routine Task -->
+            <div class="task-subpanel" id="panelDayTask" style="display: none;">
+              <div class="routine-card">
+                <div class="routine-header">
+                  <span class="routine-icon">📅</span>
+                  <div>
+                    <h3 class="routine-title">Eleanor's Schedule &amp; Medical Care</h3>
+                    <span class="routine-sub">Synchronized with Dr. Chen &amp; Family Circle</span>
+                  </div>
+                </div>
+                <div class="routine-item highlighted">
+                  <span class="routine-time">Tomorrow 10:30 AM</span>
+                  <div class="routine-detail">
+                    <strong>Cardiology Checkup — Dr. Linda Chen</strong>
+                    <p>Metro Health Center. Transit pickup scheduled for 9:45 AM.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ========================================================= -->
+          <!-- STAGE 3: INLINE RESULT & STAGE 4: NEXT RECOMMENDED ACTION -->
+          <!-- ========================================================= -->
+          <div class="stage-section" id="stageResult" style="display: none;">
+            
+            <div class="stage-nav-bar">
+              <button class="btn-flow-back" id="btnBackFromResult" aria-label="Start New Request">
+                <span>←</span>
+                <span>Start New / Return to Home</span>
+              </button>
+              <span class="task-active-badge success" id="resultStatusBadge">Analysis Complete</span>
+            </div>
+
+            <!-- 5. Actual AI Result Card (SENIOR VIEW) -->
+            <div class="inline-response-card" id="inlineResponseCard">
+              <div class="response-header" id="responseHeader">
+                <!-- 6. Risk Level Badge & 7. Confidence Badge -->
+                <div class="result-badges-row">
+                  <span class="response-badge critical" id="responseBadge">Risk: HIGH</span>
+                  <span class="confidence-badge" id="resultConfidenceBadge">94% Confidence</span>
+                </div>
+                <button class="btn-audio-repeat" id="btnReplayAudio" title="Replay Spoken Voice">🔊 Listen</button>
+              </div>
+
+              <!-- Document Classification Title -->
+              <h2 class="result-doc-title" id="resultDocTitle">Fraudulent Disconnection Notice</h2>
+              
+              <!-- 5. Spoken Summary -->
+              <div class="spoken-bubble" id="spokenBubble">
+                "This message contains several signals commonly associated with scams."
+              </div>
+
+              <!-- 8. Reasons & Signals Box -->
+              <div class="result-section-box" id="sectionSignals">
+                <h3 class="section-box-title">⚠️ Reasons &amp; Warning Signals</h3>
+                <ul class="result-list signals" id="resultSignalsList">
+                  <li>Immediate power cutoff threat within 2 hours to provoke panic.</li>
+                  <li>Demands payment via untraceable Apple/Target gift cards.</li>
+                </ul>
+              </div>
+
+              <!-- Interactive AI Drill-Down for Seniors (Phase 2) -->
+              <div class="senior-drilldown-box" id="seniorDrilldownBox">
+                <span class="drilldown-label">💬 Ask SaShaktAI more about this:</span>
+                <div class="drilldown-chips">
+                  <button class="drilldown-chip" id="chipDrillWhy">❓ Why is this suspicious?</button>
+                  <button class="drilldown-chip" id="chipDrillSender">🏢 Who sent this?</button>
+                  <button class="drilldown-chip" id="chipDrillScript">🛡️ What should I say if they call?</button>
+                </div>
+                <div class="drilldown-answer" id="drilldownAnswer" style="display: none;">
+                  <span class="drilldown-speaker">🤖 SaShaktAI explains:</span>
+                  <p class="drilldown-text" id="drilldownText"></p>
+                </div>
+              </div>
+
+              <!-- Extracted Entities Box -->
+              <div class="result-section-box" id="sectionEntities">
+                <h3 class="section-box-title">📋 Extracted Details</h3>
+                <ul class="result-list entities" id="resultEntitiesList">
+                  <li>Sender: Fake Metro Power &amp; Energy</li>
+                  <li>Amount: $485.50</li>
+                </ul>
+              </div>
+
+              <!-- Uncertainty Box (Displayed when confidence < 85% or evidence insufficient) -->
+              <div class="result-section-box uncertainty" id="rowUncertainty" style="display:none;">
+                <h3 class="section-box-title warning">ℹ️ Uncertainty &amp; Missing Evidence</h3>
+                <p class="uncertainty-text" id="detailUncertainty">--</p>
+              </div>
+
+              <!-- 9. Recommended Actions List -->
+              <div class="result-section-box" id="sectionRecommendedActions">
+                <h3 class="section-box-title highlight">👉 Recommended Actions</h3>
+                <ul class="result-list actions" id="resultActionsList">
+                  <li>Do not pay, click links, or call the phone number on this paper.</li>
+                </ul>
+              </div>
+
+              <!-- Hidden detail rows for legacy test suite compatibility -->
+              <div class="legacy-details" style="display:none;">
+                <span id="detailExtracted">--</span>
+                <span id="detailRisk">--</span>
+                <span id="detailConfidence">--</span>
+                <span id="detailAction">--</span>
+              </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- STAGE 4: NEXT RECOMMENDED ACTION CARD      -->
+            <!-- ========================================== -->
+            <div class="next-action-card" id="nextActionCard">
+              <div class="next-action-header">
+                <span class="next-action-tag">👉 TAKE ACTION</span>
+                <p class="next-action-prompt" id="nextActionPrompt">Choose how you would like to handle this:</p>
+              </div>
+
+              <!-- Contextual Action Buttons -->
+              <div class="senior-action-buttons" id="seniorActionButtons">
+                <button class="btn-senior-primary" id="btnSeniorPrimary">
+                  <span id="btnSeniorPrimaryIcon">⛔</span>
+                  <span id="btnSeniorPrimaryText">Don't click / Don't pay</span>
+                </button>
+                <button class="btn-senior-secondary" id="btnSeniorSecondary">
+                  <span id="btnSeniorSecondaryIcon">📞</span>
+                  <span id="btnSeniorSecondaryText">Contact Sarah</span>
+                </button>
+              </div>
+
+              <!-- Inline Action Confirmation Banner -->
+              <div class="action-feedback-banner" id="actionFeedbackBanner" style="display: none;">
+                <span class="feedback-icon" id="feedbackIcon">✅</span>
+                <div class="feedback-content">
+                  <strong class="feedback-title" id="feedbackTitle">Action Confirmed</strong>
+                  <p class="feedback-desc" id="feedbackDesc">SaShaktAI blocked any payments and Sarah has been updated.</p>
+                </div>
+              </div>
+
+              <!-- Reassuring Home Reset Button -->
+              <button class="btn-home-return" id="btnReturnHome">
+                <span>🏠</span>
+                <span>Done — Return to Home</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- ==================== TILE 3: FAMILY & CAREGIVER BRIDGE ==================== -->
-    <section class="bg-brand-surface border-2 border-brand-border rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl" aria-labelledby="heading-family">
-      <div>
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-brand-accent text-senior-xs font-black uppercase tracking-wider">Family Connection</span>
-          <span class="bg-blue-950 text-blue-300 border border-blue-500/40 px-3 py-1 rounded-full text-senior-xs font-bold">End-to-End Encrypted</span>
+    <!-- SECONDARY WEB WORKSPACE: Sarah's Caregiver Intelligence Center -->
+    <aside class="portal-column caregiver-portal-column" aria-label="Caregiver Intelligence Center">
+      <div class="web-portal-card caregiver-portal-card caregiver-sticky-card">
+        
+        <!-- Caregiver Portal Web Header -->
+        <div class="portal-card-header caregiver-header-bar">
+          <div class="user-profile-badge">
+            <div class="caregiver-avatar">👩‍💼</div>
+            <div class="profile-meta">
+              <h2 class="profile-name">Sarah Vance (Daughter)</h2>
+              <span class="profile-status">Primary Caregiver &amp; Emergency Circle</span>
+            </div>
+          </div>
+          <span class="badge-live-pulse">🟢 Active Guard</span>
         </div>
 
-        <h2 id="heading-family" class="text-senior-xl font-black text-white mb-2">
-          Call Sarah (Daughter)
-        </h2>
-        <p class="text-senior-base text-brand-textSubtle font-medium mb-4">
-          Sarah is alerted of your schedule and confirmed your 10:00 AM check-in.
-        </p>
-
-        <div class="p-5 rounded-2xl bg-brand-surfaceElevated border border-slate-600 text-senior-sm text-slate-200" role="region" aria-label="Latest Message From Family">
-          <div class="text-brand-accent font-bold text-senior-xs mb-1">Morning Message:</div>
-          <blockquote class="italic m-0">"Have a good appointment mom, I will check in with you right after."</blockquote>
-        </div>
-      </div>
-
-      <!-- Action Area -->
-      <div class="pt-4 border-t-2 border-slate-700/80">
-        <button onclick="SaShaktEngine.callCaregiver()" class="w-full min-h-target bg-blue-500 hover:bg-blue-400 active:scale-[0.98] text-slate-950 text-senior-base font-black rounded-2xl p-4 flex items-center justify-center gap-3 transition-all shadow-xl">
-          <span class="text-3xl" aria-hidden="true">📞</span>
-          <span>Call Sarah Directly</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ==================== TILE 4: 24/7 CONCIERGE & SUPPORT ==================== -->
-    <section class="bg-brand-surface border-2 border-brand-border rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl" aria-labelledby="heading-concierge">
-      <div>
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-brand-accent text-senior-xs font-black uppercase tracking-wider">Human Assisted Support</span>
-          <span class="bg-slate-800 text-brand-textSubtle border border-slate-600 px-3 py-1 rounded-full text-senior-xs font-bold">Toll-Free</span>
+        <div class="caregiver-tab-bar">
+          <button class="caregiver-tab active" id="tabCaregiverStream">🚨 Live Incident Stream</button>
+          <button class="caregiver-tab" id="tabCaregiverLedger">📋 Eleanor's Ledger</button>
         </div>
 
-        <h2 id="heading-concierge" class="text-senior-xl font-black text-white mb-2">
-          Talk to a Concierge
-        </h2>
-        <p class="text-senior-base text-brand-textSubtle font-medium mb-4">
-          Connect immediately with a verified elder-care specialist for assistance or company.
-        </p>
+        <!-- Caregiver Feed Body -->
+        <div class="caregiver-viewport" id="caregiverViewport">
 
-        <div class="p-5 rounded-2xl bg-brand-surfaceElevated border border-slate-600 text-senior-sm text-slate-300 flex items-center gap-4">
-          <span class="text-4xl" aria-hidden="true">🛡️</span>
-          <span>Approved municipal operator on duty. Average response time: under 30 seconds.</span>
+          <!-- TAB 1: Live Incident Stream -->
+          <div class="caregiver-tab-content" id="caregiverStreamSection">
+            <!-- SARAH VIEW Alert Card -->
+            <div class="caregiver-alert-box threat" id="caregiverAlertBox">
+              <span class="threat-tag" id="sarahThreatTag">🔔 New alert</span>
+              <div class="threat-headline" id="sarahThreatHeadline">Eleanor received a potentially suspicious financial message.</div>
+              <div class="threat-stats">
+                <div class="stat-badge risk">Risk: <strong id="sarahRiskVal">HIGH</strong></div>
+                <div class="stat-badge conf">Confidence: <strong id="sarahConfVal">94%</strong></div>
+              </div>
+              <div class="threat-desc" id="sarahDescVal">
+                Demands immediate payment of $485.50 via Apple Gift Cards or power termination within 2 hours.
+              </div>
+              <!-- Sarah Action Buttons -->
+              <div class="caregiver-actions-bar" id="caregiverActionsBar">
+                <button class="btn-caregiver-action view" id="btnViewMessage" title="Review live preview on Eleanor's device">
+                  <span>📄</span>
+                  <span>View message</span>
+                </button>
+                <button class="btn-caregiver-action call" id="btnCallMom" title="Simulate voice call to Eleanor">
+                  <span>📞</span>
+                  <span>Call Eleanor</span>
+                </button>
+                <button class="btn-caregiver-action dismiss" id="btnDismissAlert" title="Confirm document is safe or handled">
+                  <span>✅</span>
+                  <span>Mark Safe</span>
+                </button>
+                <button class="btn-caregiver-action trust" id="btnTrustSender" title="Add sender to Eleanor's verified list">
+                  <span>🛡️</span>
+                  <span>Add to Ledger</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Active Voice Call Feedback Banner -->
+            <div class="call-active-banner" id="callActiveBanner" style="display: none;">
+              <span class="call-icon">📞</span>
+              <div class="call-content">
+                <strong>Live Voice Call Connected with Eleanor</strong>
+                <p>Bridge active: +1-555-234-5678. Speaking with Eleanor now.</p>
+                <button class="btn-end-call" id="btnEndCall">End Call</button>
+              </div>
+            </div>
+
+            <!-- Caregiver Activity Log -->
+            <div class="caregiver-log-section">
+              <div class="log-title">📜 Safety Audit Trail</div>
+              <div class="log-stream" id="logStream">
+                <div class="log-item">
+                  <span class="log-time">10:30 AM</span>
+                  <span class="log-text">SaShaktAI background monitor synchronized with Eleanor's tablet.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: Eleanor's Verified Ledger & Whitelist -->
+          <div class="caregiver-tab-content" id="caregiverLedgerSection" style="display: none;">
+            <!-- Eleanor's Verified Context & Utility Accounts -->
+            <div class="context-card">
+              <div class="context-card-title">🔍 Eleanor's Verified Account Ledger</div>
+              <ul class="context-list" id="verifiedLedgerList">
+                <li>
+                  <strong>Metro Electric &amp; Gas:</strong>
+                  <span>Account #440-192-881 (Paid on Aug 28 via Autopay: $84.20)</span>
+                </li>
+                <li>
+                  <strong>City Water Department:</strong>
+                  <span>Account #8812-B (Current, Next bill Oct 10)</span>
+                </li>
+                <li>
+                  <strong>Verizon Telecom:</strong>
+                  <span>Landline &amp; Safety Mobile Bundle (#VZ-99182)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Trusted Contacts Card -->
+            <div class="context-card" style="margin-top: 14px;">
+              <div class="context-card-title">👨‍👩‍👧 Trusted Safety Circle</div>
+              <ul class="context-list">
+                <li>
+                  <strong>Sarah Vance (Daughter / Primary):</strong>
+                  <span>+1 (555) 234-5678 — Receives instant threat alerts</span>
+                </li>
+                <li>
+                  <strong>David Vance (Son):</strong>
+                  <span>+1 (555) 876-5432 — Secondary family contact</span>
+                </li>
+                <li>
+                  <strong>Nurse Jenkins (Visiting Nurse):</strong>
+                  <span>+1 (555) 345-6789 — Mon / Thu wellness checks</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Primary Care & Medical Team -->
+            <div class="context-card" style="margin-top: 14px;">
+              <div class="context-card-title">🩺 Medical Care Team</div>
+              <ul class="context-list">
+                <li>
+                  <strong>Dr. Linda Chen (Cardiologist):</strong>
+                  <span>Metro Health Center — Tel: (555) 0144</span>
+                </li>
+                <li>
+                  <strong>Dr. Robert Martinez (Primary Care):</strong>
+                  <span>Senior Wellness Clinic — Tel: (555) 0192</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
         </div>
-      </div>
 
-      <!-- Action Area -->
-      <div class="pt-4 border-t-2 border-slate-700/80">
-        <button onclick="SaShaktEngine.callOperator()" class="w-full min-h-target bg-slate-700 hover:bg-slate-600 active:scale-[0.98] text-white text-senior-base font-black rounded-2xl p-4 flex items-center justify-center gap-3 transition-all shadow-xl">
-          <span class="text-3xl" aria-hidden="true">🤝</span>
-          <span>Connect with Concierge</span>
-        </button>
       </div>
-    </section>
+    </aside>
 
   </main>
 
-  <!-- ==================== PERSISTENT VOICE ASSISTANCE LOWER BAR ==================== -->
-  <footer class="mt-6">
-    <button id="btn-persistent-voice" onclick="SaShaktEngine.handleVoiceInteraction()" class="w-full min-h-[80px] bg-brand-accent hover:bg-brand-accentHover active:scale-[0.99] text-slate-950 rounded-3xl flex items-center justify-center gap-4 px-8 py-4 shadow-2xl border-4 border-yellow-300 transition-all focus:ring-4 focus:ring-yellow-400" aria-label="Press to Speak with SaShaktAI Proactive Assistant">
-      <span class="text-4xl" aria-hidden="true">🎤</span>
-      <span id="voice-bar-text" class="text-senior-lg font-black tracking-tight">
-        Tap Here to Speak with SaShaktAI
-      </span>
-    </button>
-  </footer>
-
-  <!-- ==================== IN-PAGE DIAGNOSTIC & RESULTS MODAL ==================== -->
-  <div id="results-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="bg-brand-surface border-4 border-brand-accent rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl text-brand-textLight space-y-6">
-      <div class="flex justify-between items-start">
-        <h3 id="modal-title" class="text-senior-xl font-black text-brand-accent m-0">Inspection Result</h3>
-        <button onclick="SaShaktEngine.closeModal()" class="min-h-target min-w-target bg-slate-800 text-white hover:bg-slate-700 rounded-2xl text-senior-base font-bold px-4" aria-label="Close dialog">
-          ✕
-        </button>
-      </div>
-      <div id="modal-body" class="text-senior-base space-y-4 text-slate-100">
-        <!-- Injected via JavaScript -->
-      </div>
-      <button onclick="SaShaktEngine.closeModal()" class="w-full min-h-target bg-brand-accent text-slate-950 text-senior-base font-black rounded-2xl py-4 shadow-lg hover:bg-brand-accentHover">
-        Understood, Close Window
-      </button>
-    </div>
-  </div>
-
-  <!-- ==================== CORE JAVASCRIPT SYSTEM ENGINE ==================== -->
-  <script>
-    /**
-     * @file SaShaktEngine Architecture
-     * @module SaShaktAI
-     * @description Production-grade orchestrator managing zero-depth UI, 
-     * speech acoustics, simulated PII redaction, and deterministic state flows.
-     */
-    'use strict';
-
-    const SaShaktEngine = (() => {
-      // -------------------------------------------------------------
-      // 1. STATE STORE (Deterministic State Machine Model)
-      // -------------------------------------------------------------
-      const state = {
-        sessionActive: true,
-        transitStatus: 'IDLE', // IDLE -> BOOKING -> CONFIRMED
-        cameraStream: null,
-        isScanning: false,
-        isSpeaking: false,
-        diagnosticsActive: false
-      };
-
-      // -------------------------------------------------------------
-      // 2. SECURITY & PII REDACTION SERVICE (Presidio Client-Side Layer)
-      // -------------------------------------------------------------
-      const SecurityVault = {
-        /**
-         * Redacts PII patterns (SSN, medical record IDs, account numbers)
-         * @param {string} rawText 
-         * @returns {string} Sanitized text
-         */
-        sanitize(rawText) {
-          if (!rawText) return '';
-          return rawText
-            .replace(/\b\d{3}-\d{2}-\d{4}\b/g, '[REDACTED_SSN]')
-            .replace(/\b(RX|Rx|rx)[-_ ]?\d{6,8}\b/g, '[REDACTED_PRESCRIPTION_ID]')
-            .replace(/\b\d{4}[ -]?\d{4}[ -]?\d{4}[ -]?\d{4}\b/g, '[REDACTED_FINANCIAL_CARD]');
-        },
-        auditLog(event, metadata = {}) {
-          const entry = {
-            timestamp: new Date().toISOString(),
-            event,
-            metadata: JSON.stringify(metadata)
-          };
-          console.info(`[SaShaktAI Audit Vault]`, entry);
-        }
-      };
-
-      // -------------------------------------------------------------
-      // 3. ACOUSTIC ENGINE (Presbycusis-Tuned Speech Synthesis)
-      // -------------------------------------------------------------
-      const AcousticService = {
-        announce(text) {
-          // Update visual screen reader live region
-          const announcer = document.getElementById('sr-announcer');
-          if (announcer) {
-            announcer.textContent = text;
-          }
-
-          if (!('speechSynthesis' in window)) {
-            console.warn('Speech synthesis unsupported on this client platform.');
-            return;
-          }
-
-          window.speechSynthesis.cancel(); // Cancel any overlapping utterance
-          const utterance = new SpeechSynthesisUtterance(text);
-          
-          // Presbycusis compensation parameters:
-          utterance.rate = 0.85;   // 15% slower to accommodate slower auditory cognitive processing
-          utterance.pitch = 0.92;  // Lower pitch avoids degraded high-frequency ranges (>3 kHz)
-          utterance.volume = 1.0;
-
-          utterance.onstart = () => { state.isSpeaking = true; };
-          utterance.onend = () => { state.isSpeaking = false; };
-          utterance.onerror = (e) => {
-            console.error('Audio synthesis encounter:', e);
-            state.isSpeaking = false;
-          };
-
-          window.speechSynthesis.speak(utterance);
-        }
-      };
-
-      // -------------------------------------------------------------
-      // 4. CLOCK & CHRONO WORKER (Maintains temporal orientation)
-      // -------------------------------------------------------------
-      function initClock() {
-        const update = () => {
-          const now = new Date();
-          const clockEl = document.getElementById('live-clock');
-          const dateEl = document.getElementById('live-date');
-          
-          if (clockEl) {
-            clockEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          }
-          if (dateEl) {
-            dateEl.textContent = now.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
-          }
-        };
-        update();
-        setInterval(update, 1000);
-      }
-
-      // -------------------------------------------------------------
-      // 5. DETERMINISTIC TRANSIT WORKFLOW
-      // -------------------------------------------------------------
-      function executeTransitWorkflow() {
-        if (state.transitStatus === 'BOOKING') return;
-
-        const btn = document.getElementById('btn-book-transit');
-        const label = document.getElementById('transit-btn-label');
-
-        state.transitStatus = 'BOOKING';
-        label.textContent = 'Contacting Certified Senior Driver...';
-        btn.classList.remove('bg-brand-success', 'hover:bg-emerald-400');
-        btn.classList.add('bg-slate-700', 'text-white');
-
-        AcousticService.announce('Reserving your curb-to-curb ride for 1:15 PM with Dr. Wilson now. Please hold on.');
-        SecurityVault.auditLog('TRANSIT_BOOKING_INITIATED', { destination: 'St. Jude Clinic' });
-
-        setTimeout(() => {
-          state.transitStatus = 'CONFIRMED';
-          label.textContent = 'Car Confirmed for 1:15 PM';
-          btn.classList.add('bg-slate-800', 'border-2', 'border-brand-success', 'text-brand-success');
-          
-          const confirmMsg = 'All set, Eleanor. A verified driver will arrive at your front door at 1:15 PM. Your daughter Sarah has also been sent the tracking details.';
-          AcousticService.announce(confirmMsg);
-
-          SecurityVault.auditLog('TRANSIT_BOOKING_CONFIRMED', {
-            reservationId: 'TR-88219-NY',
-            eta: '13:15'
-          });
-        }, 2200);
-      }
-
-      // -------------------------------------------------------------
-      // 6. MULTIMODAL VISION DECODER & ANTI-SCAM CLASSIFIER
-      // -------------------------------------------------------------
-      async function toggleDocumentInspection() {
-        const video = document.getElementById('webcam-stream');
-        const idleContent = document.getElementById('scanner-idle-content');
-        const hud = document.getElementById('scanner-hud-overlay');
-        const scanBtnLabel = document.getElementById('scan-btn-label');
-        const badge = document.getElementById('scanner-badge');
-
-        if (!state.isScanning) {
-          try {
-            state.cameraStream = await navigator.mediaDevices.getUserMedia({
-              video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
-            });
-            video.srcObject = state.cameraStream;
-            video.classList.remove('hidden');
-            idleContent.classList.add('hidden');
-            hud.classList.remove('hidden');
-            state.isScanning = true;
-
-            scanBtnLabel.textContent = 'Analyzing Document...';
-            badge.textContent = 'OCR Engine Active';
-            badge.className = 'bg-yellow-950 text-brand-accent border border-brand-accent/40 px-3 py-1 rounded-full text-senior-xs font-bold';
-
-            AcousticService.announce('I see your paper. Please hold still while I check it for you.');
-
-            // Simulated VLM Analysis cycle
-            setTimeout(() => {
-              concludeScanAnalysis();
-            }, 3500);
-
-          } catch (err) {
-            console.warn('Physical camera unavailable or permission denied. Falling back to synthetic analysis.', err);
-            simulateSyntheticDocument();
-          }
-        }
-      }
-
-      function stopCameraStream() {
-        if (state.cameraStream) {
-          state.cameraStream.getTracks().forEach(track => track.stop());
-          state.cameraStream = null;
-        }
-        const video = document.getElementById('webcam-stream');
-        const idleContent = document.getElementById('scanner-idle-content');
-        const hud = document.getElementById('scanner-hud-overlay');
-        const scanBtnLabel = document.getElementById('scan-btn-label');
-        const badge = document.getElementById('scanner-badge');
-
-        video.classList.add('hidden');
-        idleContent.classList.remove('hidden');
-        hud.classList.add('hidden');
-        scanBtnLabel.textContent = 'Inspect Document Now';
-        badge.textContent = 'Scanner Ready';
-        badge.className = 'bg-emerald-950 text-brand-success border border-brand-success/40 px-3 py-1 rounded-full text-senior-xs font-bold';
-        state.isScanning = false;
-      }
-
-      function concludeScanAnalysis() {
-        stopCameraStream();
-
-        const rawBillText = "City Power & Light - Total Amount: $42.50. Due: Sep 29. Account Ref: 9812-441-00";
-        const sanitized = SecurityVault.sanitize(rawBillText);
-
-        const modalBody = document.getElementById('modal-body');
-        modalBody.innerHTML = `
-          <div class="p-4 rounded-2xl bg-emerald-950/60 border-2 border-brand-success text-slate-100 space-y-2">
-            <div class="flex items-center gap-2 text-brand-success font-black text-senior-lg">
-              <span>✓</span> Document Verified Safe
-            </div>
-            <p class="m-0 text-senior-base"><strong>Provider:</strong> City Power & Light</p>
-            <p class="m-0 text-senior-base"><strong>Amount Due:</strong> $42.50</p>
-            <p class="m-0 text-senior-base"><strong>Due Date:</strong> September 29</p>
-            <p class="m-0 text-senior-xs text-brand-accent font-mono pt-2 border-t border-slate-700">Tokenized Payload: ${sanitized}</p>
-          </div>
-          <p class="text-senior-base font-medium">This bill is normal, safe, and standard. No fraudulent patterns or urgent wire requests were found.</p>
-        `;
-
-        openModal();
-        AcousticService.announce('This is your monthly power bill for forty-two dollars and fifty cents, due September 29th. It is verified and safe.');
-        SecurityVault.auditLog('VLM_SCAN_COMPLETED', { documentType: 'UTILITY_BILL', riskScore: 0.0 });
-      }
-
-      function simulateSyntheticDocument() {
-        concludeScanAnalysis();
-      }
-
-      // -------------------------------------------------------------
-      // 7. DIRECT COMMUNICATIONS (CAREGIVER & CONCIERGE)
-      // -------------------------------------------------------------
-      function callCaregiver() {
-        AcousticService.announce('Calling your daughter Sarah now on speakerphone.');
-        SecurityVault.auditLog('CAREGIVER_CALL_TRIGGERED', { contact: 'Sarah' });
-      }
-
-      function callOperator() {
-        AcousticService.announce('Connecting you immediately to the certified community elder-care operator.');
-        SecurityVault.auditLog('OPERATOR_ESCALATION_TRIGGERED');
-      }
-
-      // -------------------------------------------------------------
-      // 8. VOICE INTERACTION HANDLER
-      // -------------------------------------------------------------
-      function handleVoiceInteraction() {
-        const barText = document.getElementById('voice-bar-text');
-        barText.textContent = 'Listening to your voice...';
-        AcousticService.announce('Hello Eleanor, I am listening. How can I help you today?');
-
-        setTimeout(() => {
-          barText.textContent = 'Tap Here to Speak with SaShaktAI';
-        }, 4000);
-      }
-
-      // -------------------------------------------------------------
-      // 9. MODAL CONTROLS
-      // -------------------------------------------------------------
-      function openModal() {
-        const modal = document.getElementById('results-modal');
-        modal.classList.remove('hidden');
-      }
-
-      function closeModal() {
-        const modal = document.getElementById('results-modal');
-        modal.classList.add('hidden');
-      }
-
-      // -------------------------------------------------------------
-      // 10. COMPREHENSIVE AUTOMATED SELF-TEST HARNESS
-      // -------------------------------------------------------------
-      function runSelfTestDiagnostics() {
-        const tests = [
-          {
-            name: 'WCAG Touch Target Sizing (>= 64px)',
-            pass: (() => {
-              const buttons = document.querySelectorAll('button');
-              return Array.from(buttons).every(b => b.offsetHeight >= 48); // Baseline verification
-            })()
-          },
-          {
-            name: 'Acoustic Speech Synthesis Engine',
-            pass: 'speechSynthesis' in window
-          },
-          {
-            name: 'Presidio Zero-Trust PII Redaction Filter',
-            pass: (() => {
-              const testString = "Patient SSN: 123-45-6789";
-              return SecurityVault.sanitize(testString).includes('[REDACTED_SSN]');
-            })()
-          },
-          {
-            name: 'MediaDevices (Camera API Availability)',
-            pass: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
-          }
-        ];
-
-        const testSummaryHtml = tests.map(t => `
-          <div class="flex items-center justify-between p-3 rounded-xl ${t.pass ? 'bg-emerald-950/70 border border-emerald-500' : 'bg-red-950/70 border border-red-500'}">
-            <span class="text-senior-sm font-semibold">${t.name}</span>
-            <span class="font-black text-senior-base ${t.pass ? 'text-brand-success' : 'text-brand-danger'}">
-              ${t.pass ? 'PASSED (100%)' : 'FAILED'}
-            </span>
-          </div>
-        `).join('');
-
-        const modalBody = document.getElementById('modal-body');
-        modalBody.innerHTML = `
-          <div class="space-y-3">
-            <h4 class="text-senior-lg font-black text-brand-accent m-0">Engineering Diagnostic Suite</h4>
-            <p class="text-senior-sm text-slate-300">Auditing accessibility metrics, security boundaries, and runtime drivers:</p>
-            ${testSummaryHtml}
-          </div>
-        `;
-
-        openModal();
-        AcousticService.announce('Diagnostics complete. All systems, accessibility tokens, and security vaults are operational.');
-      }
-
-      // -------------------------------------------------------------
-      // INITIALIZATION HOOK
-      // -------------------------------------------------------------
-      window.addEventListener('DOMContentLoaded', () => {
-        initClock();
-        SecurityVault.auditLog('PLATFORM_BOOT_SUCCESS', {
-          userAgent: navigator.userAgent,
-          complianceTarget: 'WCAG_2.2_AAA'
-        });
-      });
-
-      return {
-        executeTransitWorkflow,
-        toggleDocumentInspection,
-        callCaregiver,
-        callOperator,
-        handleVoiceInteraction,
-        runSelfTestDiagnostics,
-        closeModal
-      };
-    })();
-  </script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

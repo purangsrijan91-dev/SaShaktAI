@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 650" width="600" height="650">
+  <rect width="600" height="650" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- Official Header -->
+  <rect x="0" y="0" width="600" height="90" fill="#0369a1"/>
+  <text x="40" y="55" fill="#ffffff" font-size="24" font-weight="bold" font-family="Arial, sans-serif">METRO ELECTRIC &amp; GAS</text>
+  <text x="560" y="55" fill="#bae6fd" font-size="14" font-family="Arial, sans-serif" text-anchor="end">Official Monthly Statement</text>
+
+  <!-- Account Block -->
+  <text x="40" y="140" fill="#334155" font-size="15" font-family="Arial, sans-serif">Customer: Eleanor Vance</text>
+  <text x="40" y="165" fill="#334155" font-size="15" font-family="Arial, sans-serif">Account Number: <strong>#440-192-881</strong></text>
+  <text x="40" y="190" fill="#64748b" font-size="14" font-family="Arial, sans-serif">Service Period: August 1 - August 31</text>
+
+  <!-- Green Paid Stamp -->
+  <rect x="40" y="220" width="520" height="120" fill="#f0fdf4" stroke="#86efac" stroke-width="2" rx="10"/>
+  <text x="60" y="260" fill="#166534" font-size="20" font-weight="bold" font-family="Arial, sans-serif">PAID IN FULL - THANK YOU</text>
+  <text x="60" y="290" fill="#15803d" font-size="15" font-family="Arial, sans-serif">Automatic Bank Payment Processed on August 28: $84.20</text>
+  <text x="60" y="318" fill="#166534" font-size="16" font-weight="bold" font-family="Arial, sans-serif">Total Amount Due: $0.00</text>
+
+  <!-- Verification Details -->
+  <text x="40" y="390" fill="#475569" font-size="14" font-family="Arial, sans-serif">Electricity Usage: 342 kWh (Normal seasonal range)</text>
+  <text x="40" y="420" fill="#475569" font-size="14" font-family="Arial, sans-serif">Next Scheduled Meter Reading: September 29</text>
+
+  <line x1="40" y1="460" x2="560" y2="460" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <text x="40" y="500" fill="#64748b" font-size="13" font-family="Arial, sans-serif">Customer Support: 1-800-555-METRO (Mon-Fri 8am-6pm)</text>
+  <text x="40" y="525" fill="#0284c7" font-size="13" font-family="Arial, sans-serif">Official Account Portal: https://metroelectric.org</text>
+
+  <rect x="40" y="560" width="520" height="50" fill="#f8fafc" rx="6"/>
+  <text x="300" y="590" fill="#64748b" font-size="12" font-family="Arial, sans-serif" text-anchor="middle">This is an informational receipt. No further action or payment is required.</text>
+</svg>

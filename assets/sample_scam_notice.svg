@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#fffdfa" stroke="#d1d5db" stroke-width="2"/>
+  
+  <!-- Red Warning Banner -->
+  <rect x="30" y="30" width="540" height="70" fill="#dc2626" rx="8"/>
+  <text x="300" y="60" fill="#ffffff" font-size="22" font-weight="bold" font-family="Arial, sans-serif" text-anchor="middle">URGENT DISCONNECTION NOTICE</text>
+  <text x="300" y="85" fill="#fef2f2" font-size="14" font-family="Arial, sans-serif" text-anchor="middle">IMMEDIATE ACTION REQUIRED WITHIN 2 HOURS</text>
+
+  <!-- Fake Header -->
+  <text x="50" y="140" fill="#1e293b" font-size="20" font-weight="bold" font-family="Arial, sans-serif">METRO POWER &amp; ENERGY SERVICES</text>
+  <text x="50" y="165" fill="#64748b" font-size="13" font-family="Arial, sans-serif">Emergency Collections Division • Notice ID: #9021-X</text>
+
+  <line x1="50" y1="180" x2="550" y2="180" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Body Text -->
+  <text x="50" y="220" fill="#334155" font-size="15" font-family="Arial, sans-serif">Account Holder: Eleanor Vance</text>
+  <text x="50" y="245" fill="#334155" font-size="15" font-family="Arial, sans-serif">Service Address: 742 Evergreen Terrace</text>
+  <text x="50" y="270" fill="#dc2626" font-size="16" font-weight="bold" font-family="Arial, sans-serif">Past Due Balance: $485.50</text>
+
+  <!-- Threat Box -->
+  <rect x="50" y="300" width="500" height="150" fill="#fef2f2" stroke="#f87171" stroke-width="1.5" rx="8"/>
+  <text x="70" y="335" fill="#991b1b" font-size="15" font-weight="bold" font-family="Arial, sans-serif">FINAL WARNING: POWER TERMINATION</text>
+  <text x="70" y="365" fill="#7f1d1d" font-size="13.5" font-family="Arial, sans-serif">Your electrical supply is scheduled for immediate suspension today.</text>
+  <text x="70" y="390" fill="#7f1d1d" font-size="13.5" font-family="Arial, sans-serif">Field technicians will lock your meter at the curb.</text>
+  <text x="70" y="420" fill="#991b1b" font-size="14" font-weight="bold" font-family="Arial, sans-serif">To cancel cutoff, call immediately: 1-800-555-0199</text>
+
+  <!-- Payment Instructions (Scam Signals) -->
+  <rect x="50" y="475" width="500" height="180" fill="#f8fafc" stroke="#94a3b8" stroke-width="1" rx="8"/>
+  <text x="70" y="505" fill="#0f172a" font-size="15" font-weight="bold" font-family="Arial, sans-serif">PAYMENT METHOD REQUIRED TODAY:</text>
+  <text x="70" y="535" fill="#334155" font-size="13.5" font-family="Arial, sans-serif">• Standard credit cards and local branches are NOT accepted for emergency relief.</text>
+  <text x="70" y="560" fill="#334155" font-size="13.5" font-family="Arial, sans-serif">• Payment must be completed via Target or Apple Gift Cards or MoneyGram wire.</text>
+  <text x="70" y="585" fill="#334155" font-size="13.5" font-family="Arial, sans-serif">• Submit card serial numbers directly by calling 1-800-555-0199.</text>
+  <text x="70" y="620" fill="#2563eb" font-size="13.5" font-family="Arial, sans-serif">Online Emergency Portal: http://pay-fast-energy-relief.biz</text>
+
+  <!-- Footer -->
+  <text x="300" y="740" fill="#94a3b8" font-size="11" font-family="Arial, sans-serif" text-anchor="middle">Do not mail payment. Field disconnect order cannot be recalled once dispatched.</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450">
+  <path d="M 20,40 Q 80,60 140,30 Q 200,60 280,35 Q 360,65 440,30 Q 520,60 580,40 L 580,420 L 20,420 Z" fill="#fafaf9" stroke="#d6d3d1" stroke-width="2"/>
+  
+  <text x="300" y="80" fill="#a8a29e" font-size="14" font-style="italic" font-family="Arial, sans-serif" text-anchor="middle">[TOP OF SLIP TORN / MISSING LOGO]</text>
+
+  <text x="60" y="140" fill="#44403c" font-size="16" font-family="Arial, sans-serif">... balance of <strong>$72.00</strong> due on the 15th ...</text>
+  <text x="60" y="180" fill="#78716c" font-size="14" font-family="Arial, sans-serif">Thank you for your continued patronage.</text>
+  <text x="60" y="210" fill="#78716c" font-size="14" font-family="Arial, sans-serif">Please return this portion with your remittance.</text>
+
+  <line x1="60" y1="240" x2="540" y2="240" stroke="#e7e5e4" stroke-dasharray="4"/>
+
+  <text x="60" y="280" fill="#a8a29e" font-size="13" font-family="Arial, sans-serif">Remit to: P.O. Box 9918, Regional Processing Center</text>
+  <text x="60" y="310" fill="#a8a29e" font-size="13" font-family="Arial, sans-serif">Account: ****-****-3312</text>
+  <text x="60" y="340" fill="#dc2626" font-size="12" font-family="Arial, sans-serif">* Warning: Company telephone and contact address obscured.</text>
+</svg>

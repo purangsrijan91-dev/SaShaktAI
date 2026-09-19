@@ -1,0 +1,25 @@
+{
+  "name": "sashaktai",
+  "version": "1.0.0",
+  "description": "SaShaktAI — AI Companion for Senior Independence & Safety",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test:judge": "node tests/judge_evaluator.js"
+  },
+  "keywords": [
+    "sashaktai",
+    "senior-companion",
+    "multimodal-ai",
+    "anti-scam",
+    "gemini"
+  ],
+  "author": "SaShaktAI Team",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^0.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}

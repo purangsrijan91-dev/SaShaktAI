@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 650" width="600" height="650">
+  <rect width="600" height="650" fill="#fef3c7" stroke="#fde68a" stroke-width="2"/>
+
+  <!-- Background decorative sunny scene -->
+  <circle cx="500" cy="100" r="60" fill="#fde047" opacity="0.6"/>
+  <rect x="0" y="450" width="600" height="200" fill="#86efac"/>
+
+  <!-- Cartoon Cat/Pet Graphic -->
+  <g transform="translate(150, 160)">
+    <!-- Ears -->
+    <polygon points="50,110 20,40 100,80" fill="#f97316"/>
+    <polygon points="250,110 280,40 200,80" fill="#f97316"/>
+    <polygon points="50,105 32,55 90,85" fill="#fed7aa"/>
+    <polygon points="250,105 268,55 210,85" fill="#fed7aa"/>
+
+    <!-- Head -->
+    <ellipse cx="150" cy="150" rx="120" ry="100" fill="#fb923c"/>
+    
+    <!-- Eyes -->
+    <ellipse cx="105" cy="135" rx="18" ry="25" fill="#ffffff"/>
+    <ellipse cx="195" cy="135" rx="18" ry="25" fill="#ffffff"/>
+    <ellipse cx="105" cy="135" rx="10" ry="18" fill="#15803d"/>
+    <ellipse cx="195" cy="135" rx="10" ry="18" fill="#15803d"/>
+    <circle cx="102" cy="130" r="4" fill="#ffffff"/>
+    <circle cx="192" cy="130" r="4" fill="#ffffff"/>
+
+    <!-- Nose & Mouth -->
+    <polygon points="150,165 140,155 160,155" fill="#ec4899"/>
+    <path d="M 150 165 Q 135 180 120 172" stroke="#431407" stroke-width="3" fill="none"/>
+    <path d="M 150 165 Q 165 180 180 172" stroke="#431407" stroke-width="3" fill="none"/>
+
+    <!-- Whiskers -->
+    <line x1="60" y1="150" x2="110" y2="158" stroke="#78350f" stroke-width="2"/>
+    <line x1="50" y1="168" x2="110" y2="168" stroke="#78350f" stroke-width="2"/>
+    <line x1="240" y1="150" x2="190" y2="158" stroke="#78350f" stroke-width="2"/>
+    <line x1="250" y1="168" x2="190" y2="168" stroke="#78350f" stroke-width="2"/>
+
+    <!-- Body -->
+    <ellipse cx="150" cy="310" rx="100" ry="100" fill="#ea580c"/>
+    <ellipse cx="150" cy="320" rx="60" ry="70" fill="#fed7aa"/>
+
+    <!-- Collar -->
+    <path d="M 80 240 Q 150 265 220 240" stroke="#3b82f6" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <circle cx="150" cy="265" r="12" fill="#eab308"/>
+  </g>
+
+  <!-- Photo Label / Non-Document indicator -->
+  <rect x="50" y="550" width="500" height="60" fill="#ffffff" rx="8" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="300" y="585" fill="#475569" font-size="16" font-family="Arial, sans-serif" font-weight="bold" text-anchor="middle">Personal Photo: Eleanor's Cat "Marmalade" (Non-Document)</text>
+</svg>
