@@ -36,7 +36,6 @@
   </script>
 
   <style>
-    /* Prevent accidental text selections during unsteady touch interaction */
     * {
       -webkit-user-select: none;
       user-select: none;
@@ -69,7 +68,7 @@
   <main class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow">
     
     <!-- CARD 1: TODAY'S FOCUS & APPOINTMENT -->
-    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+    <section class="bg-cardDark border-2 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
       <div>
         <div class="flex items-center justify-between mb-3">
           <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Today's Schedule</span>
@@ -93,7 +92,7 @@
     </section>
 
     <!-- CARD 2: DOCUMENT & MEDICINE VISION SCANNER -->
-    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+    <section class="bg-cardDark border-2 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
       <div>
         <div class="flex items-center justify-between mb-3">
           <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Vision Assistant</span>
@@ -122,7 +121,7 @@
     </section>
 
     <!-- CARD 3: FAMILY & CAREGIVER BRIDGE -->
-    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+    <section class="bg-cardDark border-2 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
       <div>
         <div class="flex items-center justify-between mb-3">
           <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Family Connection</span>
@@ -146,7 +145,7 @@
     </section>
 
     <!-- CARD 4: VERIFIED 24/7 ASSISTANCE -->
-    <section class="bg-cardDark border-3 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
+    <section class="bg-cardDark border-2 border-slate-700 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl">
       <div>
         <div class="flex items-center justify-between mb-3">
           <span class="text-accentYellow text-sm md:text-base font-extrabold uppercase tracking-wider">Support</span>
@@ -184,7 +183,6 @@
 
   <!-- SCRIPT LOGIC: ACOUSTICS, SCANNING & TIME -->
   <script>
-    // 1. Clock and Date Engine
     function updateClock() {
       const now = new Date();
       document.getElementById('clockDisplay').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -193,18 +191,16 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. Presbycusis-Tuned Audio Synthesizer (Slower speed, lower pitch)
     function speakPresbycusisAudio(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.85;  // Slower pacing prevents cognitive fatigue
-        utterance.pitch = 0.95; // Slightly lower pitch for optimal high-frequency hearing loss clarity
+        utterance.rate = 0.85;
+        utterance.pitch = 0.95;
         window.speechSynthesis.speak(utterance);
       }
     }
 
-    // 3. Autonomous Task Execution: Ride Booking
     function triggerRideBooking() {
       const btn = document.getElementById('bookRideBtn');
       btn.innerHTML = '<span>⏳ Reserving Your Car...</span>';
@@ -218,7 +214,6 @@
       }, 2000);
     }
 
-    // 4. Live Webcam Document Scanner
     let streamInstance = null;
     async function toggleDocumentScan() {
       const video = document.getElementById('webcamFeed');
@@ -236,13 +231,11 @@
           btn.innerHTML = '<span>✨ Processing Document...</span>';
           speakPresbycusisAudio("I see your paper. Please hold still while I check it for you.");
 
-          // Simulate computer vision processing and scam verification
           setTimeout(() => {
             overlay.classList.add('hidden');
             speakPresbycusisAudio("This is your monthly electric bill from City Power for forty-two dollars. It is due September 29th. It is safe and verified.");
             alert("✅ SCATTER & SCAM CHECK: Verified Official Utility Document.\n\nSummary:\n- Provider: City Power & Light\n- Amount Due: $42.50\n- Due Date: Sep 29\n- Fraud Risk: 0% Safe");
             
-            // Stop camera and reset
             streamInstance.getTracks().forEach(track => track.stop());
             streamInstance = null;
             video.classList.add('hidden');
@@ -257,7 +250,6 @@
       }
     }
 
-    // 5. Voice Interaction Bar
     function handleVoiceTrigger() {
       const voiceBarText = document.getElementById('voiceBarText');
       voiceBarText.textContent = "Listening to you...";
